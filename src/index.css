@@ -1,164 +1,65 @@
-/* ── CSS Variables ─────────────────────────────────────────── */
-:root {
-  --bg-primary:    #0f0f13;
-  --bg-secondary:  #1a1a24;
-  --bg-surface:    #22222f;
-  --bg-elevated:   #2a2a3a;
+@import 'tailwindcss';
 
-  --accent:        #e63946;
-  --accent-hover:  #ff4d5a;
-  --accent-muted:  rgba(230, 57, 70, 0.15);
+/* ── Design tokens exposed as Tailwind theme values ──────────
+   These generate utilities like `bg-ink`, `text-fg`, `border-edge`,
+   `bg-accent`, etc. throughout the components. */
+@theme {
+  --color-ink: #0f0f13;
+  --color-panel: #1a1a24;
+  --color-surface: #22222f;
+  --color-elevated: #2a2a3a;
+  --color-disabled: #44445a;
 
-  --success:       #2ec4b6;
-  --warning:       #f4a261;
-  --disabled:      #44445a;
+  --color-accent: #e63946;
+  --color-accent-hover: #ff4d5a;
 
-  --text-primary:   #f0f0f5;
-  --text-secondary: #9090a8;
-  --text-muted:     #55556a;
+  --color-success: #2ec4b6;
+  --color-warning: #f4a261;
 
-  --border:        #2e2e40;
-  --border-focus:  #e63946;
+  --color-edge: #2e2e40;
 
-  --radius-sm:  4px;
-  --radius-md:  8px;
-  --radius-lg:  12px;
-
-  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.4);
-  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.5);
-  --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.6);
+  --color-fg: #f0f0f5;
+  --color-muted: #9090a8;
+  --color-faint: #55556a;
 
   --font-sans: 'Inter', 'Segoe UI', system-ui, sans-serif;
   --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
 
-  --transition: 150ms ease;
+  --animate-pop-in: pop-in 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+
+  @keyframes pop-in {
+    from {
+      opacity: 0;
+      transform: translate(-50%, -50%) scale(0.85);
+    }
+    to {
+      opacity: 1;
+      transform: translate(-50%, -50%) scale(1);
+    }
+  }
 }
 
-/* ── Reset ─────────────────────────────────────────────────── */
-*,
-*::before,
-*::after {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
-
-html {
-  font-size: 16px;
-  scroll-behavior: smooth;
-  -webkit-text-size-adjust: 100%;
-}
-
+/* ── Base ──────────────────────────────────────────────────── */
 body {
-  font-family: var(--font-sans);
-  background-color: var(--bg-primary);
-  color: var(--text-primary);
-  line-height: 1.5;
+  margin: 0;
   min-height: 100dvh;
+  background: var(--color-ink);
+  color: var(--color-fg);
+  font-family: var(--font-sans);
+  line-height: 1.5;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-/* ── Typography ────────────────────────────────────────────── */
-h1, h2, h3, h4, h5, h6 {
-  font-weight: 700;
-  line-height: 1.2;
-  letter-spacing: -0.01em;
-  color: var(--text-primary);
-}
-
-a {
-  color: var(--accent);
-  text-decoration: none;
-  transition: color var(--transition);
-}
-
-a:hover {
-  color: var(--accent-hover);
-}
-
-/* ── Form Elements ─────────────────────────────────────────── */
-input,
-select,
-textarea {
-  font-family: inherit;
-  font-size: 0.875rem;
-  background: var(--bg-elevated);
-  color: var(--text-primary);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-sm);
-  padding: 0.5rem 0.75rem;
-  outline: none;
-  transition: border-color var(--transition), box-shadow var(--transition);
-  width: 100%;
-}
-
-input:focus,
-select:focus,
-textarea:focus {
-  border-color: var(--border-focus);
-  box-shadow: 0 0 0 3px var(--accent-muted);
-}
-
-input[type="color"] {
-  padding: 2px 4px;
-  height: 36px;
-  cursor: pointer;
-  background: var(--bg-elevated);
-}
-
-input::placeholder,
-textarea::placeholder {
-  color: var(--text-muted);
-}
-
-button {
-  font-family: inherit;
-  font-size: 0.875rem;
-  font-weight: 600;
-  cursor: pointer;
-  border: none;
-  border-radius: var(--radius-sm);
-  padding: 0.5rem 1rem;
-  transition: background var(--transition), opacity var(--transition), transform var(--transition);
-  white-space: nowrap;
-  user-select: none;
-}
-
-button:active:not(:disabled) {
-  transform: scale(0.97);
-}
-
-button:disabled {
-  opacity: 0.4;
-  cursor: not-allowed;
-}
-
-/* ── Scrollbar ─────────────────────────────────────────────── */
+/* Thin dark scrollbars to match the theme. */
 ::-webkit-scrollbar {
   width: 6px;
   height: 6px;
 }
-
 ::-webkit-scrollbar-track {
-  background: var(--bg-secondary);
+  background: var(--color-panel);
 }
-
 ::-webkit-scrollbar-thumb {
-  background: var(--bg-elevated);
+  background: var(--color-elevated);
   border-radius: 3px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: var(--disabled);
-}
-
-/* ── Utility ───────────────────────────────────────────────── */
-.sr-only {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  overflow: hidden;
-  clip: rect(0 0 0 0);
-  white-space: nowrap;
 }

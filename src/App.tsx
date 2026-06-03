@@ -1,19 +1,18 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from './assets/vite.svg'
-import heroImg from './assets/hero.png'
-import './App.css'
+import { Navigate, Route, Routes } from 'react-router-dom'
+import Layout from './components/Layout'
+import GaragePage from './pages/GaragePage'
+import WinnersPage from './pages/WinnersPage'
 
 function App() {
-  const [count, setCount] = useState(0)
-
   return (
-    <>
-      <section id="center">
-      add assigment section here
-      
-      </section>
-    </>
+    <Routes>
+      <Route element={<Layout />}>
+        <Route index element={<Navigate to="/garage" replace />} />
+        <Route path="/garage" element={<GaragePage />} />
+        <Route path="/winners" element={<WinnersPage />} />
+        <Route path="*" element={<Navigate to="/garage" replace />} />
+      </Route>
+    </Routes>
   )
 }
 
