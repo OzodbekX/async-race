@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { useAppDispatch, useAppSelector } from '../../app/hooks'
-import { clearWinner } from '../race/raceSlice'
+import { clearWinner, setRacing } from '../race/raceSlice'
 import { useCreateCarMutation } from '../../api/racingApi'
 import { RANDOM_CARS_PER_CLICK } from '../../constants'
 import { randomCarName, randomColor } from '../../utils/random'
@@ -80,7 +80,7 @@ export default function RaceControls({
           <button
             type="button"
             className={btn('ghost')}
-            onClick={() => dispatch(clearWinner())}
+            onClick={() => { dispatch(clearWinner()); dispatch(setRacing(false)) }}
           >
             Close
           </button>

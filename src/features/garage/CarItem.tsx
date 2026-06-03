@@ -40,7 +40,7 @@ export default function CarItem({ car, raceBusy, onStart, onStop }: CarItemProps
   return (
     <div className="relative flex min-h-16 items-center gap-3 overflow-hidden rounded-lg border border-edge bg-panel px-3.5 py-2.5 transition-colors hover:border-elevated">
       <div className="flex shrink-0 flex-col gap-1">
-        <span className="max-w-[120px] truncate text-xs text-muted">{car.name}</span>
+        <span className="w-[90px] truncate text-center text-xs text-muted">{car.name}</span>
         <button
           type="button"
           className={btn('ghost', true)}
