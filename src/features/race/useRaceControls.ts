@@ -92,13 +92,17 @@ export function useRaceControls(cars: Car[]) {
 
   const startCar = useCallback(
     async (id: number) => {
-      const { velocity, distance } = await toggleEngine({
-        id,
-        status: 'started',
-      }).unwrap()
-      dispatch(engineStarted({ id, duration: distance / velocity }))
       try {
-        await drive(id).unwrap()
+        const { velocity, distance } = await toggleEngine({
+          id,
+          status: 'started',
+        }).unwrap()
+        dispatch(engineStarted({ id, duration: distance / velocity }))
+        try {
+          await drive(id).unwrap()
+        } catch {
+          dispatch(engineBroke(id))
+        }
       } catch {
         dispatch(engineBroke(id))
       }
@@ -119,7 +123,11 @@ export function useRaceControls(cars: Car[]) {
   const startRace = useCallback(async () => {
     dispatch(clearWinner())
     dispatch(setRacing(true))
-    await Promise.all(cars.map((c) => startCar(c.id)))
+    try {
+      await Promise.allSettled(cars.map((c) => startCar(c.id)))
+    } catch {
+      dispatch(setRacing(false))
+    }
   }, [cars, dispatch, startCar])
 
   const resetAll = useCallback(async () => {

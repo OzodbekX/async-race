@@ -5,11 +5,7 @@ import { resetCreateForm, setCreateForm, setEditForm, stopEditing } from '../ui/
 import { useCreateCarMutation, useUpdateCarMutation } from '../../api/racingApi'
 import { MAX_CAR_NAME_LENGTH } from '../../constants'
 import { btn, colorInputCls, cx, inputCls } from '../../ui'
-
-const isValidName = (name: string) =>
-  name.trim().length > 0 && name.trim().length <= MAX_CAR_NAME_LENGTH
-
-const isValidHex = (v: string) => /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.test(v)
+import { isValidName, isValidHex } from '../../utils/validation'
 
 interface CarFormsProps {
   disabled: boolean
@@ -54,12 +50,16 @@ export default function CarForms({ disabled }: CarFormsProps) {
     e.preventDefault()
     if (!isValidName(name)) return
 
-    if (isEditing) {
-      await updateCar({ id: editForm.id!, name: name.trim(), color }).unwrap()
-      dispatch(stopEditing())
-    } else {
-      await createCar({ name: name.trim(), color }).unwrap()
-      dispatch(resetCreateForm())
+    try {
+      if (isEditing) {
+        await updateCar({ id: editForm.id!, name: name.trim(), color }).unwrap()
+        dispatch(stopEditing())
+      } else {
+        await createCar({ name: name.trim(), color }).unwrap()
+        dispatch(resetCreateForm())
+      }
+    } catch {
+      // API error — form stays open so the user can retry
     }
   }
 
@@ -67,12 +67,12 @@ export default function CarForms({ disabled }: CarFormsProps) {
 
   return (
     <form
-      className="flex shrink-0 items-center gap-2 rounded-full border border-edge bg-panel px-4 py-2"
+      className="flex w-full flex-wrap items-center gap-2 rounded-2xl border border-edge bg-panel px-4 py-2 sm:w-auto sm:flex-nowrap sm:rounded-full"
       onSubmit={handleSubmit}
     >
       <input
         type="text"
-        className={cx(inputCls, 'min-w-0 flex-1')}
+        className={cx(inputCls, 'min-w-0 flex-1 basis-full sm:basis-auto')}
         placeholder={isEditing ? 'Edit car name' : 'New car name'}
         maxLength={MAX_CAR_NAME_LENGTH}
         value={name}

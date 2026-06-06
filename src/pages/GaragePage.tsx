@@ -7,6 +7,9 @@ import CarForms from '../features/garage/CarForms'
 import RaceControls from '../features/garage/RaceControls'
 import CarItem from '../features/garage/CarItem'
 import Pagination from '../components/Pagination'
+import ServerError from '../components/ServerError'
+import LoadingState from '../components/LoadingState'
+import EmptyState from '../components/EmptyState'
 import { GARAGE_PAGE_LIMIT } from '../constants'
 
 export default function GaragePage() {
@@ -49,23 +52,10 @@ export default function GaragePage() {
         </div>
       </div>
 
-      {isError && (
-        <div className="flex flex-col items-center justify-center gap-3 py-16 text-center text-faint">
-          <span className="text-4xl opacity-40">🔌</span>
-          <span className="text-base font-semibold">Cannot reach the race server</span>
-          <span>
-            Start the async-race-api on{' '}
-            <code className="font-mono text-fg">http://127.0.0.1:3000</code> and refresh.
-          </span>
-        </div>
-      )}
-      {isLoading && <div className="py-16 text-center text-faint">Loading cars…</div>}
+      {isError && <ServerError />}
+      {isLoading && <LoadingState message="Loading cars…" />}
       {!isLoading && !isError && cars.length === 0 && (
-        <div className="flex flex-col items-center justify-center gap-3 py-16 text-center text-faint">
-          <span className="text-4xl opacity-40">🚗</span>
-          <span className="text-base font-semibold">No cars in the garage</span>
-          <span>Create one above or generate a batch.</span>
-        </div>
+        <EmptyState icon="🚗" title="No cars in the garage" description="Create one above or generate a batch." />
       )}
 
       <div className="flex flex-col gap-2">
@@ -89,7 +79,6 @@ export default function GaragePage() {
           disabled={racing}
         />
       </div>
-
     </section>
   )
 }
