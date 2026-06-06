@@ -56,7 +56,11 @@ export default function WinnersPage() {
 
   return (
     <section>
-      <h2 className="mb-5 flex items-center gap-2 text-2xl font-extrabold uppercase tracking-wide">
+      <div
+        className="fixed inset-0 -z-10 bg-cover bg-center bg-no-repeat"
+        style={{ backgroundImage: "linear-gradient(rgba(15,15,19,0.82), rgba(15,15,19,0.82)), url('/winners.webp')" }}
+      />
+      <h2 className="mb-3 flex items-center gap-2 text-base font-extrabold uppercase tracking-wide">
         Winners <span className="text-accent">({total})</span>
       </h2>
 

@@ -18,7 +18,7 @@ export default function Pagination({
 }: PaginationProps) {
   const lastPage = Math.max(1, Math.ceil(total / limit))
   return (
-    <div className="mt-5 flex items-center justify-center gap-2">
+    <div className="flex items-center justify-center gap-2">
       <button
         type="button"
         className={btn('secondary')}

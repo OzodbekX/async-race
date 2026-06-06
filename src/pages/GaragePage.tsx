@@ -27,12 +27,27 @@ export default function GaragePage() {
 
   return (
     <section>
-      <h2 className="mb-5 flex items-center gap-2 text-2xl font-extrabold uppercase tracking-wide">
+      <div
+        className="fixed inset-0 -z-10 bg-cover bg-center bg-no-repeat"
+        style={{ backgroundImage: "linear-gradient(rgba(15,15,19,0.82), rgba(15,15,19,0.82)), url('/garage.webp')" }}
+      />
+      <h2 className="mb-3 flex items-center gap-2 text-base font-extrabold uppercase tracking-wide">
         Garage <span className="text-accent">({total})</span>
       </h2>
 
-      <CarForms disabled={racing} />
-      <RaceControls cars={cars} racing={racing} onRace={startRace} onReset={resetAll} />
+      <div className="mb-3 flex flex-wrap items-center gap-1">
+        <CarForms disabled={racing} />
+        <RaceControls cars={cars} racing={racing} onRace={startRace} onReset={resetAll} />
+        <div className="ml-auto hidden shrink-0 min-[1000px]:block">
+          <Pagination
+            page={page}
+            total={total}
+            limit={GARAGE_PAGE_LIMIT}
+            onChange={(p) => dispatch(setGaragePage(p))}
+            disabled={racing}
+          />
+        </div>
+      </div>
 
       {isError && (
         <div className="flex flex-col items-center justify-center gap-3 py-16 text-center text-faint">
@@ -65,13 +80,16 @@ export default function GaragePage() {
         ))}
       </div>
 
-      <Pagination
-        page={page}
-        total={total}
-        limit={GARAGE_PAGE_LIMIT}
-        onChange={(p) => dispatch(setGaragePage(p))}
-        disabled={racing}
-      />
+      <div className="mt-3 min-[1000px]:hidden">
+        <Pagination
+          page={page}
+          total={total}
+          limit={GARAGE_PAGE_LIMIT}
+          onChange={(p) => dispatch(setGaragePage(p))}
+          disabled={racing}
+        />
+      </div>
+
     </section>
   )
 }

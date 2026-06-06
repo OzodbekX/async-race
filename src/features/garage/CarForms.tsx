@@ -1,4 +1,5 @@
 import type React from 'react'
+import { useEffect, useState } from 'react'
 import { useAppDispatch, useAppSelector } from '../../app/hooks'
 import { resetCreateForm, setCreateForm, setEditForm, stopEditing } from '../ui/uiSlice'
 import { useCreateCarMutation, useUpdateCarMutation } from '../../api/racingApi'
@@ -7,6 +8,8 @@ import { btn, colorInputCls, cx, inputCls } from '../../ui'
 
 const isValidName = (name: string) =>
   name.trim().length > 0 && name.trim().length <= MAX_CAR_NAME_LENGTH
+
+const isValidHex = (v: string) => /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.test(v)
 
 interface CarFormsProps {
   disabled: boolean
@@ -24,11 +27,28 @@ export default function CarForms({ disabled }: CarFormsProps) {
   const color = isEditing ? editForm.color : createForm.color
   const isLoading = creating || updating
 
+  const [colorText, setColorText] = useState(color)
+
+  // Keep text in sync when color changes externally (e.g. switching selected car)
+  useEffect(() => {
+    setColorText(color)
+  }, [color])
+
   const setName = (value: string) =>
     dispatch(isEditing ? setEditForm({ name: value }) : setCreateForm({ name: value }))
 
   const setColor = (value: string) =>
     dispatch(isEditing ? setEditForm({ color: value }) : setCreateForm({ color: value }))
+
+  const handleColorText = (value: string) => {
+    setColorText(value)
+    if (isValidHex(value)) setColor(value)
+  }
+
+  const handleColorPicker = (value: string) => {
+    setColorText(value)
+    setColor(value)
+  }
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
@@ -47,7 +67,7 @@ export default function CarForms({ disabled }: CarFormsProps) {
 
   return (
     <form
-      className="mb-5 flex min-w-[220px] flex-wrap items-center gap-3 rounded-lg border border-edge bg-panel p-4"
+      className="flex shrink-0 items-center gap-2 rounded-full border border-edge bg-panel px-4 py-2"
       onSubmit={handleSubmit}
     >
       <input
@@ -63,8 +83,18 @@ export default function CarForms({ disabled }: CarFormsProps) {
         type="color"
         className={colorInputCls}
         value={color}
-        onChange={(e) => setColor(e.target.value)}
+        onChange={(e) => handleColorPicker(e.target.value)}
         disabled={disabled}
+      />
+      <input
+        type="text"
+        className={cx(inputCls, 'w-24 font-mono text-xs')}
+        placeholder="#000000"
+        maxLength={7}
+        value={colorText}
+        onChange={(e) => handleColorText(e.target.value)}
+        disabled={disabled}
+        spellCheck={false}
       />
       <button
         className={btn('primary')}

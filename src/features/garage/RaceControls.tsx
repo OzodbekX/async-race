@@ -43,7 +43,7 @@ export default function RaceControls({
 
   return (
     <>
-      <div className="mb-5 flex flex-wrap gap-2">
+      <div className="flex flex-wrap gap-2">
         <button
           type="button"
           className={btn('primary')}
@@ -73,7 +73,7 @@ export default function RaceControls({
       {winnerId !== null && winnerName && (
         <div
           role="status"
-          className="animate-pop-in fixed left-1/2 top-1/2 z-[200] -translate-x-1/2 -translate-y-1/2 rounded-xl border-2 border-accent bg-panel px-10 py-8 text-center shadow-2xl"
+          className="animate-pop-in fixed left-1/2 top-1/2 z-[200] rounded-xl border-2 border-accent bg-panel px-10 py-8 text-center shadow-2xl"
         >
           <h2 className="mb-2 text-2xl font-bold text-accent">🏆 {winnerName} wins!</h2>
           <p className="mb-4 text-sm text-muted">Finished in {winnerTime?.toFixed(2)}s</p>

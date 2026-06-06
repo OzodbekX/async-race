@@ -10,7 +10,7 @@ const linkCls = ({ isActive }: { isActive: boolean }) =>
 export default function Layout() {
   return (
     <div className="flex min-h-screen flex-col">
-      <nav className="sticky top-0 z-50 flex h-14 items-center gap-4 border-b border-edge bg-panel px-6 shadow-md">
+      <nav className="sticky top-0 z-50 flex h-10 items-center gap-3 border-b border-edge bg-panel px-4 shadow-md">
         <span className="mr-auto text-lg font-extrabold uppercase tracking-wider text-accent">
           🏁 Async Race
         </span>
@@ -21,7 +21,7 @@ export default function Layout() {
           Winners
         </NavLink>
       </nav>
-      <main className="mx-auto w-full max-w-[1200px] flex-1 p-6">
+      <main className="mx-auto w-full max-w-[1200px] flex-1 p-3">
         <Outlet />
       </main>
     </div>
