@@ -1,0 +1,12 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <script>
+      // GitHub Pages SPA fallback: redirect to index.html preserving the path.
+      const path = window.location.pathname.replace('/async-race', '') || '/'
+      window.location.replace('/async-race/?path=' + encodeURIComponent(path))
+    </script>
+  </head>
+  <body></body>
+</html>
