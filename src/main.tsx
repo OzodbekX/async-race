@@ -9,13 +9,14 @@ import App from './App.tsx'
 // Restore path after GitHub Pages 404 redirect.
 const redirectPath = new URLSearchParams(window.location.search).get('path')
 if (redirectPath) {
-  window.history.replaceState(null, '', redirectPath)
+  const base = import.meta.env.BASE_URL.replace(/\/$/, '')
+  window.history.replaceState(null, '', base + redirectPath)
 }
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <Provider store={store}>
-      <BrowserRouter>
+      <BrowserRouter basename={import.meta.env.BASE_URL}>
         <App />
       </BrowserRouter>
     </Provider>
