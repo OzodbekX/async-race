@@ -2,13 +2,7 @@ import { createSlice } from '@reduxjs/toolkit'
 import type { PayloadAction } from '@reduxjs/toolkit'
 import type { RaceCarState } from '../../types'
 
-/**
- * Race state, keyed by car id. Persisted in the store so a running race
- * survives view switches: the Garage view's animation loop advances each
- * car's `progress`, and because the loop only runs while the view is mounted,
- * leaving the view freezes every car in place and returning resumes from the
- * exact stored progress (freeze & resume).
- */
+
 interface RaceState {
   cars: Record<number, RaceCarState>
   /** True while a "Race all" run is in progress on the current page. */

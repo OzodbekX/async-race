@@ -1,5 +1,5 @@
 import type React from 'react'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { useAppDispatch, useAppSelector } from '../../app/hooks'
 import { resetCreateForm, setCreateForm, setEditForm, stopEditing } from '../ui/uiSlice'
 import { useCreateCarMutation, useUpdateCarMutation } from '../../api/racingApi'
@@ -24,11 +24,14 @@ export default function CarForms({ disabled }: CarFormsProps) {
   const isLoading = creating || updating
 
   const [colorText, setColorText] = useState(color)
+  const [prevColor, setPrevColor] = useState(color)
 
-  // Keep text in sync when color changes externally (e.g. switching selected car)
-  useEffect(() => {
+  // Sync text input when color changes externally (e.g. switching selected car).
+  // Inline state update during render avoids a useEffect cascading re-render.
+  if (prevColor !== color) {
+    setPrevColor(color)
     setColorText(color)
-  }, [color])
+  }
 
   const setName = (value: string) =>
     dispatch(isEditing ? setEditForm({ name: value }) : setCreateForm({ name: value }))

@@ -1,5 +1,5 @@
 import { useAppDispatch, useAppSelector } from '../../app/hooks'
-import { setWinnersSort } from '../../features/ui/uiSlice'
+import { setWinnersSort } from '../ui/uiSlice'
 import CarIcon from '../../components/CarIcon'
 import { WINNERS_PAGE_LIMIT } from '../../constants'
 import type { WinnerWithCar, WinnersSortField } from '../../types'

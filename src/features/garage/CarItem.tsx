@@ -71,7 +71,7 @@ export default function CarItem({ car, raceBusy, onStart, onStop }: CarItemProps
         {confirming ? (
           <div className="flex flex-1 items-center justify-center gap-4">
             <span className="text-sm text-muted">
-              Remove <span className="font-semibold text-fg">"{car.name}"</span>?
+              Remove <span className="font-semibold text-fg">&quot;{car.name}&quot;</span>?
             </span>
             <div className="flex gap-2">
               <button
