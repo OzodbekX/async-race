@@ -1,3 +1,5 @@
+import type React from 'react'
+
 /** Tiny class-name helpers so repeated Tailwind variants stay DRY. */
 
 export const cx = (...classes: (string | false | null | undefined)[]): string =>
@@ -23,3 +25,10 @@ export const inputCls =
 
 export const colorInputCls =
   'h-9 w-12 shrink-0 cursor-pointer rounded-full border border-edge bg-elevated p-0.5 disabled:opacity-40'
+
+export const centeredViewCls =
+  'flex flex-col items-center justify-center gap-3 py-16 text-center text-faint'
+
+export const pageBgStyle = (image: string): React.CSSProperties => ({
+  backgroundImage: `linear-gradient(rgba(15,15,19,0.82), rgba(15,15,19,0.82)), url('${image}')`,
+})

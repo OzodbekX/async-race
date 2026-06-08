@@ -6,6 +6,7 @@ import ServerError from '../components/ServerError'
 import LoadingState from '../components/LoadingState'
 import EmptyState from '../components/EmptyState'
 import { WINNERS_PAGE_LIMIT } from '../constants'
+import { pageBgStyle } from '../ui'
 import WinnersTable from '../features/winners/WinnersTable'
 import { useWinnersRows } from '../features/winners/useWinnersRows'
 
@@ -27,13 +28,7 @@ export default function WinnersPage() {
 
   return (
     <section>
-      <div
-        className="fixed inset-0 -z-10 bg-cover bg-center bg-no-repeat"
-        style={{
-          backgroundImage:
-            "linear-gradient(rgba(15,15,19,0.82), rgba(15,15,19,0.82)), url('/winners.webp')",
-        }}
-      />
+      <div className="fixed inset-0 -z-10 bg-cover bg-center bg-no-repeat" style={pageBgStyle('/winners.webp')} />
       <h2 className="mb-3 flex items-center gap-2 text-base font-extrabold uppercase tracking-wide">
         Winners <span className="text-accent">({total})</span>
       </h2>

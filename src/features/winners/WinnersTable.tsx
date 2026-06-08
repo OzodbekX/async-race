@@ -1,7 +1,7 @@
 import { useAppDispatch, useAppSelector } from '../../app/hooks'
 import { setWinnersSort } from '../ui/uiSlice'
 import CarIcon from '../../components/CarIcon'
-import { WINNERS_PAGE_LIMIT } from '../../constants'
+import { WINNERS_PAGE_LIMIT, TIME_DISPLAY_PRECISION } from '../../constants'
 import type { WinnerWithCar, WinnersSortField } from '../../types'
 
 const SORTABLE: { field: WinnersSortField; label: string }[] = [
@@ -59,7 +59,7 @@ export default function WinnersTable({ rows, page }: WinnersTableProps) {
               </td>
               <td className={tdCls}>{row.name}</td>
               <td className={tdCls}>{row.wins}</td>
-              <td className={tdCls}>{row.time.toFixed(2)}</td>
+              <td className={tdCls}>{row.time.toFixed(TIME_DISPLAY_PRECISION)}</td>
             </tr>
           ))}
         </tbody>

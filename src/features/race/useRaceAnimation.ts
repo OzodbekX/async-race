@@ -13,16 +13,16 @@ export function useRaceAnimation() {
 
   useEffect(() => {
     if (!hasDriving) return undefined
-    let last: number | null = null
-    let frame = requestAnimationFrame(function tick(t) {
-      const dt = last === null ? 0 : t - last
-      last = t
+    let lastTimestamp: number | null = null
+    let rafId = requestAnimationFrame(function tick(timestamp) {
+      const elapsedMs = lastTimestamp === null ? 0 : timestamp - lastTimestamp
+      lastTimestamp = timestamp
       const current = store.getState().race.cars
       Object.entries(current).forEach(([id, car]) => {
-        if (car.phase === 'driving') dispatch(advance({ id: Number(id), dtMs: dt }))
+        if (car.phase === 'driving') dispatch(advance({ id: Number(id), elapsedMs }))
       })
-      frame = requestAnimationFrame(tick)
+      rafId = requestAnimationFrame(tick)
     })
-    return () => cancelAnimationFrame(frame)
+    return () => cancelAnimationFrame(rafId)
   }, [hasDriving, dispatch, store])
 }

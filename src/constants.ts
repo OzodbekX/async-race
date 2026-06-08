@@ -8,6 +8,10 @@ export const RANDOM_CARS_PER_CLICK = 100
 
 export const DEFAULT_CAR_COLOR = '#3b82f6'
 
+export const MS_PER_SECOND = 1000
+export const MAX_RGB_CHANNEL = 256
+export const TIME_DISPLAY_PRECISION = 2
+
 /** Two-part name pools used for random car generation. */
 export const CAR_BRANDS = [
   'Tesla',

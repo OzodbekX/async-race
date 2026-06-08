@@ -1,6 +1,7 @@
 import { useAppDispatch, useAppSelector } from '../../app/hooks'
 import { clearWinner, setRacing } from '../race/raceSlice'
 import { btn } from '../../ui'
+import { TIME_DISPLAY_PRECISION } from '../../constants'
 import type { Car } from '../../types'
 
 interface WinnerAnnouncementProps {
@@ -22,7 +23,7 @@ export default function WinnerAnnouncement({ cars }: WinnerAnnouncementProps) {
       className="animate-pop-in fixed left-1/2 top-1/2 z-[200] rounded-xl border-2 border-accent bg-panel px-10 py-8 text-center shadow-2xl"
     >
       <h2 className="mb-2 text-2xl font-bold text-accent">🏆 {winnerName} wins!</h2>
-      <p className="mb-4 text-sm text-muted">Finished in {winnerTime?.toFixed(2)}s</p>
+      <p className="mb-4 text-sm text-muted">Finished in {winnerTime?.toFixed(TIME_DISPLAY_PRECISION)}s</p>
       <button
         type="button"
         className={btn('ghost')}

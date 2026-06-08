@@ -1,6 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit'
 import type { PayloadAction } from '@reduxjs/toolkit'
 import type { RaceCarState } from '../../types'
+import { MS_PER_SECOND } from '../../constants'
 
 interface RaceState {
   cars: Record<number, RaceCarState>
@@ -19,15 +20,15 @@ const initialState: RaceState = {
   winnerTime: null,
 }
 
-const freshCar = (): RaceCarState => ({
+const initialCarState = (): RaceCarState => ({
   phase: 'idle',
   progress: 0,
   duration: 0,
   time: 0,
 })
 
-const carState = (state: RaceState, id: number): RaceCarState => {
-  state.cars[id] ??= freshCar()
+const ensureCarState = (state: RaceState, id: number): RaceCarState => {
+  state.cars[id] ??= initialCarState()
   return state.cars[id]
 }
 
@@ -37,30 +38,30 @@ const raceSlice = createSlice({
   reducers: {
     // Engine returned velocity+distance: car is cleared to drive.
     engineStarted(state, action: PayloadAction<{ id: number; duration: number }>) {
-      const car = carState(state, action.payload.id)
+      const car = ensureCarState(state, action.payload.id)
       car.duration = action.payload.duration
       car.phase = 'driving'
       car.time = 0
       // Keep existing progress so a resumed car continues where it froze.
     },
-    // Advance a car's animation by `dtMs` of elapsed real time.
-    advance(state, action: PayloadAction<{ id: number; dtMs: number }>) {
-      const car = carState(state, action.payload.id)
+    // Advance a car's animation by `elapsedMs` of elapsed real time.
+    advance(state, action: PayloadAction<{ id: number; elapsedMs: number }>) {
+      const car = ensureCarState(state, action.payload.id)
       if (car.phase !== 'driving' || car.duration <= 0) return
-      car.progress = Math.min(1, car.progress + action.payload.dtMs / car.duration)
+      car.progress = Math.min(1, car.progress + action.payload.elapsedMs / car.duration)
       if (car.progress >= 1) {
         car.phase = 'finished'
-        car.time = car.duration / 1000
+        car.time = car.duration / MS_PER_SECOND
       }
     },
     // Engine 500'd: stop the car where it is.
     engineBroke(state, action: PayloadAction<number>) {
-      const car = carState(state, action.payload)
+      const car = ensureCarState(state, action.payload)
       car.phase = 'broken'
     },
     // Stop a single car and return it to the start line.
     resetCar(state, action: PayloadAction<number>) {
-      state.cars[action.payload] = freshCar()
+      state.cars[action.payload] = initialCarState()
     },
     setRacing(state, action: PayloadAction<boolean>) {
       state.racing = action.payload

@@ -1,6 +1,8 @@
+import { centeredViewCls } from '../ui'
+
 export default function ServerError() {
   return (
-    <div className="flex flex-col items-center justify-center gap-3 py-16 text-center text-faint">
+    <div className={centeredViewCls}>
       <span className="text-4xl opacity-40">🔌</span>
       <span className="text-base font-semibold">Cannot reach the race server</span>
       <span>

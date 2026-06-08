@@ -11,22 +11,22 @@ export function useWinnersRows(data: WinnersData | undefined): WinnerWithCar[] {
   const [rows, setRows] = useState<WinnerWithCar[]>([])
 
   useEffect(() => {
-    let cancelled = false
+    let isCancelled = false
     const winners = data?.winners ?? []
     Promise.all(
-      winners.map(async (w) => {
+      winners.map(async (winner) => {
         try {
-          const car = await fetchCar(w.id)
-          return { ...w, name: car.name, color: car.color }
+          const car = await fetchCar(winner.id)
+          return { ...winner, name: car.name, color: car.color }
         } catch {
-          return { ...w, name: `#${w.id}`, color: DEFAULT_CAR_COLOR }
+          return { ...winner, name: `#${winner.id}`, color: DEFAULT_CAR_COLOR }
         }
       }),
     ).then((enriched) => {
-      if (!cancelled) setRows(enriched)
+      if (!isCancelled) setRows(enriched)
     })
     return () => {
-      cancelled = true
+      isCancelled = true
     }
   }, [data])
 
