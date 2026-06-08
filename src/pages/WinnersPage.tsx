@@ -12,9 +12,10 @@ import { useWinnersRows } from '../features/winners/useWinnersRows'
 export default function WinnersPage() {
   const dispatch = useAppDispatch()
   const { winnersPage: page, winnersSort: sort, winnersOrder: order } = useAppSelector((s) => s.ui)
-  const { data, isLoading, isError } = useGetWinnersQuery({ page, sort, order })
+  const { data, currentData, isFetching, isError } = useGetWinnersQuery({ page, sort, order })
   const total = data?.total ?? 0
-  const rows = useWinnersRows(data)
+  const isPageLoading = isFetching && currentData === undefined
+  const rows = useWinnersRows(currentData)
 
   return (
     <section>
@@ -27,12 +28,12 @@ export default function WinnersPage() {
       </h2>
 
       {isError && <ServerError />}
-      {isLoading && <LoadingState message="Loading winners…" />}
-      {!isLoading && !isError && total === 0 && (
+      {isPageLoading && <LoadingState message="Loading winners…" />}
+      {!isPageLoading && !isError && total === 0 && (
         <EmptyState icon="🏆" title="No winners yet" description="Win a race in the Garage to populate this table." />
       )}
 
-      {total > 0 && <WinnersTable rows={rows} page={page} />}
+      {!isPageLoading && total > 0 && <WinnersTable rows={rows} page={page} />}
 
       <Pagination
         page={page}

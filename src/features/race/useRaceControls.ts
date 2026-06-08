@@ -15,7 +15,10 @@ export function useRaceControls(cars: Car[]) {
   useRaceAnimation()
 
   const startRace = useCallback(async () => {
-    dispatch(clearWinner())
+    // Return every car to the start line first, so clicking Race again
+    // (without Reset) always runs a fresh race instead of leaving cars
+    // parked at the finish from the previous run.
+    dispatch(resetRace())
     dispatch(setRacing(true))
     try {
       await Promise.allSettled(cars.map((c) => startCar(c.id)))

@@ -21,15 +21,7 @@ interface PaginatedWinners {
 
 export const racingApi = createApi({
   reducerPath: 'racingApi',
-  baseQuery: fetchBaseQuery({
-    baseUrl: API_BASE_URL,
-    // Skip the ngrok free-tunnel interstitial page so the backend's JSON
-    // (and CORS headers) come through instead of an HTML warning.
-    prepareHeaders: (headers) => {
-      headers.set('ngrok-skip-browser-warning', 'true')
-      return headers
-    },
-  }),
+  baseQuery: fetchBaseQuery({ baseUrl: API_BASE_URL }),
   tagTypes: ['Car', 'Winner'],
   endpoints: (build) => ({
     getCars: build.query<PaginatedCars, { page: number }>({
@@ -112,9 +104,7 @@ export const racingApi = createApi({
 
 /** Fetch a single car by id (used to enrich winners with name/color). */
 export async function fetchCar(id: number): Promise<Car> {
-  const res = await fetch(`${API_BASE_URL}/garage/${id}`, {
-    headers: { 'ngrok-skip-browser-warning': 'true' },
-  })
+  const res = await fetch(`${API_BASE_URL}/garage/${id}`)
   if (!res.ok) throw new Error(`Failed to fetch car ${id}`)
   return res.json() as Promise<Car>
 }
