@@ -2,7 +2,6 @@ import { createSlice } from '@reduxjs/toolkit'
 import type { PayloadAction } from '@reduxjs/toolkit'
 import type { RaceCarState } from '../../types'
 
-
 interface RaceState {
   cars: Record<number, RaceCarState>
   /** True while a "Race all" run is in progress on the current page. */

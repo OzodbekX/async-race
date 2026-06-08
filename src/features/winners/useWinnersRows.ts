@@ -25,7 +25,9 @@ export function useWinnersRows(data: WinnersData | undefined): WinnerWithCar[] {
     ).then((enriched) => {
       if (!cancelled) setRows(enriched)
     })
-    return () => { cancelled = true }
+    return () => {
+      cancelled = true
+    }
   }, [data])
 
   return rows

@@ -7,17 +7,14 @@ type ButtonVariant = 'primary' | 'secondary' | 'success' | 'ghost'
 
 // Indicator color only — all other button styles live in index.css `button {}`.
 const BUTTON_VARIANTS: Record<ButtonVariant, string> = {
-  primary:   '[--btn-indicator:#22c55e]',  // green  — create / race
-  secondary: '[--btn-indicator:#f59e0b]',  // amber  — reset / update
-  success:   '[--btn-indicator:#4ade80]',  // lime   — engine start
-  ghost:     '[--btn-indicator:#ef4444]',  // red    — stop / cancel / remove
+  primary: '[--btn-indicator:#22c55e]', // green  — create / race
+  secondary: '[--btn-indicator:#f59e0b]', // amber  — reset / update
+  success: '[--btn-indicator:#4ade80]', // lime   — engine start
+  ghost: '[--btn-indicator:#ef4444]', // red    — stop / cancel / remove
 }
 
 export const btn = (variant: ButtonVariant, icon = false): string =>
-  cx(
-    BUTTON_VARIANTS[variant],
-    icon ? 'w-11 h-11 !p-0 !text-[0.5rem]' : '',
-  )
+  cx(BUTTON_VARIANTS[variant], icon ? 'w-11 h-11 !p-0 !text-[0.5rem]' : '')
 
 export const inputCls =
   'bg-elevated text-fg border border-edge rounded-full px-4 py-2 text-sm outline-none ' +

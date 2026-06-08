@@ -13,7 +13,12 @@ interface RaceControlsProps {
   onReset: () => void
 }
 
-export default function RaceControls({ cars, racing, onRace, onReset }: RaceControlsProps) {
+export default function RaceControls({
+  cars,
+  racing,
+  onRace,
+  onReset,
+}: RaceControlsProps) {
   const [createCar] = useCreateCarMutation()
   const [generating, setGenerating] = useState(false)
 

@@ -11,8 +11,16 @@ import { useWinnersRows } from '../features/winners/useWinnersRows'
 
 export default function WinnersPage() {
   const dispatch = useAppDispatch()
-  const { winnersPage: page, winnersSort: sort, winnersOrder: order } = useAppSelector((s) => s.ui)
-  const { data, currentData, isFetching, isError } = useGetWinnersQuery({ page, sort, order })
+  const {
+    winnersPage: page,
+    winnersSort: sort,
+    winnersOrder: order,
+  } = useAppSelector((s) => s.ui)
+  const { data, currentData, isFetching, isError } = useGetWinnersQuery({
+    page,
+    sort,
+    order,
+  })
   const total = data?.total ?? 0
   const isPageLoading = isFetching && currentData === undefined
   const rows = useWinnersRows(currentData)
@@ -21,7 +29,10 @@ export default function WinnersPage() {
     <section>
       <div
         className="fixed inset-0 -z-10 bg-cover bg-center bg-no-repeat"
-        style={{ backgroundImage: "linear-gradient(rgba(15,15,19,0.82), rgba(15,15,19,0.82)), url('/winners.webp')" }}
+        style={{
+          backgroundImage:
+            "linear-gradient(rgba(15,15,19,0.82), rgba(15,15,19,0.82)), url('/winners.webp')",
+        }}
       />
       <h2 className="mb-3 flex items-center gap-2 text-base font-extrabold uppercase tracking-wide">
         Winners <span className="text-accent">({total})</span>
@@ -30,7 +41,11 @@ export default function WinnersPage() {
       {isError && <ServerError />}
       {isPageLoading && <LoadingState message="Loading winners…" />}
       {!isPageLoading && !isError && total === 0 && (
-        <EmptyState icon="🏆" title="No winners yet" description="Win a race in the Garage to populate this table." />
+        <EmptyState
+          icon="🏆"
+          title="No winners yet"
+          description="Win a race in the Garage to populate this table."
+        />
       )}
 
       {!isPageLoading && total > 0 && <WinnersTable rows={rows} page={page} />}

@@ -26,7 +26,10 @@ export default function WinnerAnnouncement({ cars }: WinnerAnnouncementProps) {
       <button
         type="button"
         className={btn('ghost')}
-        onClick={() => { dispatch(clearWinner()); dispatch(setRacing(false)) }}
+        onClick={() => {
+          dispatch(clearWinner())
+          dispatch(setRacing(false))
+        }}
       >
         Close
       </button>

@@ -38,7 +38,10 @@ export default function GaragePage() {
     <section>
       <div
         className="fixed inset-0 -z-10 bg-cover bg-center bg-no-repeat"
-        style={{ backgroundImage: "linear-gradient(rgba(15,15,19,0.82), rgba(15,15,19,0.82)), url('/garage.webp')" }}
+        style={{
+          backgroundImage:
+            "linear-gradient(rgba(15,15,19,0.82), rgba(15,15,19,0.82)), url('/garage.webp')",
+        }}
       />
       <h2 className="mb-3 flex items-center gap-2 text-base font-extrabold uppercase tracking-wide">
         Garage <span className="text-accent">({total})</span>
@@ -61,7 +64,11 @@ export default function GaragePage() {
       {isError && <ServerError />}
       {isPageLoading && <LoadingState message="Loading cars…" />}
       {!isPageLoading && !isError && cars.length === 0 && (
-        <EmptyState icon="🚗" title="No cars in the garage" description="Create one above or generate a batch." />
+        <EmptyState
+          icon="🚗"
+          title="No cars in the garage"
+          description="Create one above or generate a batch."
+        />
       )}
 
       {!isPageLoading && (
