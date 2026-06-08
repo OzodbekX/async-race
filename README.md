@@ -1,6 +1,6 @@
 # Async Race
 
-**Deployment:** https://ozodbekx.github.io/garage
+**Deployment:** https://ozodbekx.github.io/async-race/garage
 
 ## Checklist 4000/400 pts
 
